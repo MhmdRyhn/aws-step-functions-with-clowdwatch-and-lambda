@@ -9,5 +9,7 @@ data "template_file" "auto_greeting_state_machine_template" {
   vars = {
     collector_lambda = aws_lambda_function.collector_lambda.arn
     sender_lambda = aws_lambda_function.sender_lambda.arn
+    rejection_lambda = aws_lambda_function.rejection_lambda.arn
   }
 }
+

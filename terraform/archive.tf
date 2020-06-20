@@ -10,3 +10,9 @@ data "archive_file" "sender_lambda_zip" {
   output_path = "../.archive/sender_lambda.zip"
 }
 
+data "archive_file" "rejection_lambda_zip" {
+  type = "zip"
+  source_dir = "../rejection_lambda"
+  output_path = "../.archive/rejection_lambda.zip"
+}
+

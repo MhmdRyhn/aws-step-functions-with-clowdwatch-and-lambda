@@ -1,16 +1,37 @@
 {
-	"Comment": "This state machine invokes a lambda to collect email from a file in s3 and then call another lambda to send email",
+	"Comment": "A state machine which is triggered by a CloudWatch cron job and it then sends greeting message.",
 	"StartAt": "CollectorLambda",
 	"States": {
 		"CollectorLambda": {
 			"Type": "Task",
 			"Resource": "${collector_lambda}",
-			"Next": "SenderLambda"
+			"Next": "DecisionState"
+		},
+		"DecisionState": {
+			"Type": "Choice",
+			"Choices": [
+				{
+					"Variable": "$.action",
+					"StringEquals": "send",
+					"Next": "SenderLambda"
+				},
+				{
+					"Variable": "$.action",
+					"StringEquals": "reject",
+					"Next": "RejectionLambda"
+				}
+			]
 		},
 		"SenderLambda": {
 			"Type": "Task",
 			"Resource": "${sender_lambda}",
 			"End": true
+		},
+		"RejectionLambda": {
+			"Type": "Task",
+			"Resource": "${rejection_lambda}",
+			"End": true
 		}
 	}
 }
+
