@@ -1,0 +1,16 @@
+{
+	"Comment": "This state machine invokes a lambda to collect email from a file in s3 and then call another lambda to send email",
+	"StartAt": "CollectorLambda",
+	"States": {
+		"CollectorLambda": {
+			"Type": "Task",
+			"Resource": "${collector_lambda}",
+			"Next": "SenderLambda"
+		},
+		"SenderLambda": {
+			"Type": "Task",
+			"Resource": "${sender_lambda}",
+			"End": true
+		}
+	}
+}
