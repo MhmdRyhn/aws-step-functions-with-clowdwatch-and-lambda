@@ -1,5 +1,5 @@
 resource "aws_lambda_function" "collector_lambda" {
-  function_name = "CollectorLambda"
+  function_name = "collector_lambda"
   description = "This lambda collect phone number from a JSON file in S3 bucket or from google contact"
   handler = "collect.handle"
   filename = data.archive_file.collector_lambda_zip.output_path
@@ -11,7 +11,7 @@ resource "aws_lambda_function" "collector_lambda" {
 }
 
 resource "aws_lambda_function" "sender_lambda" {
-  function_name = "SenderLambda"
+  function_name = "sender_lambda"
   description = "This lambda sends message to the phone numbers passed to it in event"
   handler = "send.handle"
   filename = data.archive_file.sender_lambda_zip.output_path
@@ -23,7 +23,7 @@ resource "aws_lambda_function" "sender_lambda" {
 }
 
 resource "aws_lambda_function" "rejection_lambda" {
-  function_name = "RejectionLambda"
+  function_name = "rejection_lambda"
   description = "This lambda sends message to the phone numbers passed to it in event"
   handler = "reject.handle"
   filename = data.archive_file.rejection_lambda_zip.output_path
