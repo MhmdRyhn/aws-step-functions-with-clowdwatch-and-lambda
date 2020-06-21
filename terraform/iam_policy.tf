@@ -1,5 +1,5 @@
 # --------- Lambda invoke policy ----------------------
-data "aws_iam_policy_document" "state_machine_lambda_invoke_policy_document" {
+data "aws_iam_policy_document" "lambda_invoke_policy_document" {
   statement {
     sid = "LambdaInvokePolicy"
     effect = "Allow"
@@ -12,13 +12,37 @@ resource "aws_iam_policy" "lambda_invoke_policy" {
   name = "LambdaInvokePolicy"
   path = "/"
   description = "Allow invoking lambda function"
-  policy = data.aws_iam_policy_document.state_machine_lambda_invoke_policy_document.json
+  policy = data.aws_iam_policy_document.lambda_invoke_policy_document.json
 }
 
 resource "aws_iam_policy_attachment" "state_machine_lambda_invoke_policy_attachment" {
   name = "StateMachineLambdaInvokePolicyAttachment"
   roles = [aws_iam_role.state_machine_role.name]
   policy_arn = aws_iam_policy.lambda_invoke_policy.arn
+}
+
+
+# -------------- Step functions triggering policy ------------
+data "aws_iam_policy_document" "step_functions_triggering_policy_document" {
+  statement {
+    sid = "StepFunctionsTriggeringPolicy"
+    effect = "Allow"
+    resources = ["*"]
+    actions = ["states:StartExecution"]
+  }
+}
+
+resource "aws_iam_policy" "step_functions_triggering_policy" {
+  name = "StepFunctionsTriggeringPolicy"
+  path = "/"
+  description = "Allow triggering step functions"
+  policy = data.aws_iam_policy_document.step_functions_triggering_policy_document.json
+}
+
+resource "aws_iam_policy_attachment" "cloudwatch_step_functions_triggering_policy_attachment" {
+  name = "StepFunctionsTriggeringPolicyAttachment"
+  roles = [aws_iam_role.cloudwatch_triggering_step_functions_role.name]
+  policy_arn = aws_iam_policy.step_functions_triggering_policy.arn
 }
 
 
@@ -45,5 +69,3 @@ resource "aws_iam_policy_attachment" "state_machine_lambda_invoke_policy_attachm
 //  roles = [aws_iam_role.lambda_s3_readonly_access_role]
 //}
 
-
-# -------------- Step functions triggering policy ------------
