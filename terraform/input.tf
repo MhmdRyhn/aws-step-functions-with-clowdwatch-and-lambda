@@ -13,6 +13,14 @@ variable "secret_access_key" {
   description = "IAM user secret access key."
 }
 
+variable "cloudwatch_cronjob_schedule_expression" {
+  type = string
+  description = "CloudWatch cronjob event schedule in GMT/UTC"
+  # https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions
+  # cron(Minute Hour DayOfMonth Month DayOfWeek Year) --> UTC/GMT
+  default = "0 19 ? * FRI *" # Run at 7:00 pm (UTC) every friday
+}
+
 //variable "s3_bucket_and_file_name" {
 //  type = object({
 //    bucket_name = string

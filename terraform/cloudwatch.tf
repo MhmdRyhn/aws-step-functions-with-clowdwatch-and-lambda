@@ -1,9 +1,7 @@
 resource "aws_cloudwatch_event_rule" "cloudwatch_auto_greeting_event_rule" {
   name = "cloudwatch_auto_greeting_cron_event_rule"
-  description = "An event is triggered by cloudwatch at some specific time"
-  # https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions
-  # cron(Minute Hour DayOfMonth Month DayOfWeek Year) --> UTC/GMT
-  schedule_expression = "cron(25 15 21 6 ? 2020)"
+  description = "A step function is triggered with an event by cloudwatch at some specific time"
+  schedule_expression = "cron(${var.cloudwatch_cronjob_schedule_expression})"
   role_arn = aws_iam_role.cloudwatch_triggering_step_functions_role.arn
 }
 

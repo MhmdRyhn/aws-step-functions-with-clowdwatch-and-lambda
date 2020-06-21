@@ -5,7 +5,7 @@ resource "aws_sfn_state_machine" "auto_greeting_state_machine" {
 }
 
 data "template_file" "auto_greeting_state_machine_template" {
-  template = file("${path.module}/templates/auto-greeting-state-machine.json")
+  template = file("${path.module}/templates/auto-greeting-state-machine.json.tmpl")
   vars = {
     collector_lambda = aws_lambda_function.collector_lambda.arn
     sender_lambda = aws_lambda_function.sender_lambda.arn

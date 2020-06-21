@@ -170,3 +170,5 @@ override.tf.json
 .idea/
 # This file is local version of "input.tfvars". This file contains AWS credentials. So, it's gitignored.
 sample_input.auto.tfvars
+sample_input.tfvars
+
