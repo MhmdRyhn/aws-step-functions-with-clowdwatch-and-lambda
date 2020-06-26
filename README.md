@@ -1,5 +1,14 @@
-# aws-step-functions-with-clowdwatch-and-lambda
-Triggering AWS Step Functions from CloudWatch to execute a series of Lambda Functions.
+# AWS Step Functions with Cloudwatch and Lambda
+Triggering AWS Step Functions from CloudWatch rule to execute a series of Lambda Functions based on condition. 
+Rules are cron jobs and set using **Cloudwatch event rule**. At some specified time it triggers the Step Function. 
+The execution flow is as follows:
+
+1. Cloudwatch rule triggers step function (the state machine).
+2. Initial state fires a lambda named *collector_lambda*.
+3. Collector lambda executes its job and then pass its output to the next state.
+4. This state decides based on the output of the collector_lambda which lambda to call next.
+5. Based on the decision of the state, either the *sender_lambda* or *rejection_lambda* is fired.
+6. The fired lambda returns output and the state machine reach its end.
 
 
 # Commands To Manipulate Resources
