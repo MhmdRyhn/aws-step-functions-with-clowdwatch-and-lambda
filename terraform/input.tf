@@ -1,20 +1,15 @@
-variable "region" {
-  type = string
+variable "aws_profile" {
+  type        = string
+  description = "Name of the AWS profile. It's usually in .aws/credentials file in UNIX systems."
+}
+
+variable "aws_region" {
+  type        = string
   description = "Preferred AWS region."
 }
 
-variable "access_key" {
-  type = string
-  description = "IAM user access key."
-}
-
-variable "secret_access_key" {
-  type = string
-  description = "IAM user secret access key."
-}
-
 variable "cloudwatch_cronjob_schedule_expression" {
-  type = string
+  type        = string
   description = "CloudWatch cronjob event schedule in GMT/UTC"
   # https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions
   # cron(Minute Hour DayOfMonth Month DayOfWeek Year) --> UTC/GMT
